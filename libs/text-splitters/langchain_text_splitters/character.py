@@ -35,7 +35,7 @@ def _split_text_with_regex(
     if separator:
         if keep_separator:
             # The parentheses in the pattern keep the delimiters in the result.
-            _splits = re.split(f"({separator})", text)
+            _splits = re.split(f"({separator})", text, flags=re.MULTILINE | re.IGNORECASE)
             splits = (
                 ([_splits[i] + _splits[i + 1] for i in range(0, len(_splits) - 1, 2)])
                 if keep_separator == "end"
@@ -49,7 +49,7 @@ def _split_text_with_regex(
                 else ([_splits[0]] + splits)
             )
         else:
-            splits = re.split(separator, text)
+            splits = re.split(separator, text, flags=re.MULTILINE | re.IGNORECASE)
     else:
         splits = list(text)
     return [s for s in splits if s != ""]
@@ -85,7 +85,7 @@ class RecursiveCharacterTextSplitter(TextSplitter):
             if _s == "":
                 separator = _s
                 break
-            if re.search(_separator, text):
+            if re.search(_separator, text, flags=re.MULTILINE | re.IGNORECASE):
                 separator = _s
                 new_separators = separators[i + 1 :]
                 break
