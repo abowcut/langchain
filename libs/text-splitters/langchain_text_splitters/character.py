@@ -35,7 +35,9 @@ def _split_text_with_regex(
     if separator:
         if keep_separator:
             # The parentheses in the pattern keep the delimiters in the result.
-            _splits = re.split(f"({separator})", text, flags=re.MULTILINE | re.IGNORECASE)
+            _splits = re.split(
+                f"({separator})", text, flags=re.MULTILINE | re.IGNORECASE
+            )
             splits = (
                 ([_splits[i] + _splits[i + 1] for i in range(0, len(_splits) - 1, 2)])
                 if keep_separator == "end"
